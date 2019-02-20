@@ -148,3 +148,34 @@ busmall_products[random3].render_as_img(image3);
 
 product_container.addEventListener('click' , handle_bus_click);
 
+var ctx = document.getElementById('myChart').getContext('2d');
+
+var data = [15, 10, 20];
+
+var myChart = new Chart(ctx, {
+  type: 'polarArea',
+  data: {
+    labels: ['Image 1', 'Image 2', 'Image 3'],
+    datasets: [{
+      label: 'Popular Images',
+      data: data,
+      backgroundColor: [
+        'red',
+        'white',
+        'blue',
+      ],
+      borderColor: [
+        'blue',
+        'red',
+        'white',
+      ],
+      hoverBackgroundColor: [
+        'purple',
+        'green',
+        'yellow',
+       
+      ],
+    }]
+  }
+
+});
