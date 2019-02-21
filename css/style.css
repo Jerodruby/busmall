@@ -1,8 +1,21 @@
 img {
     width: 250px;
+    height: 250px;
 }
 
-div {
+body > div {
    width: 600px;
    height: 600px; 
+}
+
+#div1 {
+    display: inline-block;
+}
+
+#div2 {
+    display: inline-block;
+}
+
+#div3 {
+    display: inline-block;
 }
