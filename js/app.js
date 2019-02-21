@@ -35,17 +35,21 @@ var busmall_products = [];
 var number_of_clicks = 25;
 
 var product_container = document.body;
-var result_container = document.body; 
+var result_container = document.body;
 
 var image1 = document.getElementById('image1');
 var image2 = document.getElementById('image2');
 var image3 = document.getElementById('image3');
 
+var image1_h2 = document.getElementById('image1_h2');
+var image2_h2 = document.getElementById('image2_h2');
+var image3_h2 = document.getElementById('image3_h2');
+
 var image_displayed1 = null;
 var image_displayed2 = null;
 var image_displayed3 = null;
 
-var Product = function(name, url){
+var Product = function (name, url) {
   this.name = name;
   this.url = url;
   this.clicks = 0;
@@ -55,7 +59,7 @@ var Product = function(name, url){
 
 };
 
-Product.prototype.render_as_img = function(target_img){
+Product.prototype.render_as_img = function (target_img) {
   target_img.src = this.url;
 
 };
@@ -65,10 +69,10 @@ Product.prototype.render_as_img = function(target_img){
 new Product('bag', './img/bag.jpg');
 new Product('banana', './img/banana.jpg');
 new Product('boots', './img/boots.jpg');
-new Product('chair', './img/chair.jpg'); 
+new Product('chair', './img/chair.jpg');
 new Product('bathroom', './img/bathroom.jpg');
 new Product('breakfast', './img/breakfast.jpg');
-new Product('bubblegum', './img/bubblegum');
+new Product('bubblegum', './img/bubblegum.jpg');
 new Product('cthulhu', './img/cthulhu.jpg');
 new Product('dog-duck', './img/dog-duck.jpg');
 new Product('dragon', './img/dragon.jpg');
@@ -87,95 +91,127 @@ image_displayed1 = busmall_products[0];
 image_displayed2 = busmall_products[1];
 image_displayed3 = busmall_products[2];
 
-function handle_bus_click (event){
-  number_of_clicks --;
+function handle_bus_click(event) {
+  number_of_clicks--;
 
-  if(event.target.id === 'image1' || event.target.id === 'image2' || event.target.id === 'image3')
-    if(event.target === image1){
-      image_displayed1.clicks ++;
+  if (event.target.id === 'image1' || event.target.id === 'image2' || event.target.id === 'image3')
+    if (event.target === image1) {
+      image_displayed1.clicks++;
 
     }
 
-  if(event.target === image2){
-    image_displayed2.clicks ++;
+  if (event.target === image2) {
+    image_displayed2.clicks++;
 
   }
 
-  if(event.target === image3){
-    image_displayed3.clicks ++;
+  if (event.target === image3) {
+    image_displayed3.clicks++;
 
   }
 
-  if(number_of_clicks <= 0) { 
+  if (number_of_clicks <= 0) {
     product_container.removeEventListener('click', handle_bus_click);
 
-    for(var i = 0; i < busmall_products.length; i++){
-      var li_el = document.createElement ('li');
+    for (var i = 0; i < busmall_products.length; i++) {
+      var li_el = document.createElement('li');
 
-      li_el.textContent = '${busmall_products[i].name}  ${busmall_products[i].clicks}/${busmall_products[i].appeared}';
+      li_el.textContent = `${busmall_products[i].name}  ${busmall_products[i].clicks}/${busmall_products[i].appeared}`;
 
       result_container.appendChild(li_el);
 
     }
 
   }
+  render_images();
+  render_image_chart();
 }
+function render_images() {
+  console.log('render_images');
+  var random1 = Math.floor(Math.random() * busmall_products.length);
+  var random2 = Math.floor(Math.random() * busmall_products.length);
+  var random3 = Math.floor(Math.random() * busmall_products.length);
 
-var random1 =Math.floor(Math.random() * busmall_products.length);
-var random2 =Math.floor(Math.random() * busmall_products.length);
-var random3 =Math.floor(Math.random() * busmall_products.length);
+  var click_count_section = document.createElement('article');
+  var left_clicks = document.createElement('p');
+  left_clicks.textContent = busmall_products[random1].clicks;
+  click_count_section.appendChild(left_clicks);
 
-var click_count_section = document.createElement('article');
-var left_clicks = document.createElement('p');
-left_clicks.textContent = busmall_products[random1].clicks;
-click_count_section.appendChild(left_clicks);
+  var center_clicks = document.createElement('p');
+  center_clicks.textContent = busmall_products[random2].clicks;
+  click_count_section.appendChild(center_clicks);
 
-var center_clicks = document.createElement('p');
-center_clicks.textContent = busmall_products[random2].clicks;
-click_count_section.appendChild(center_clicks);
+  var right_clicks = document.createElement('p');
+  right_clicks.textContent = busmall_products[random3].clicks;
+  click_count_section.appendChild(center_clicks);
 
-var right_clicks = document.createElement('p');
-right_clicks.textContent = busmall_products[random3].clicks;
-click_count_section.appendChild(center_clicks);
+  image_displayed1 = busmall_products[random1];
+  image_displayed2 = busmall_products[random2];
+  image_displayed3 = busmall_products[random3];
 
-image_displayed1 =
-image_displayed2 =
-image_displayed3 =
+  busmall_products[random1].render_as_img(image1);
+  busmall_products[random2].render_as_img(image2);
+  busmall_products[random3].render_as_img(image3);
+  image1_h2.textContent = busmall_products[random1].name;
+  image2_h2.textContent = busmall_products[random2].name;
+  image3_h2.textContent = busmall_products[random3].name;
+}
+product_container.addEventListener('click', handle_bus_click);
 
-busmall_products[random1].render_as_img(image1);
-busmall_products[random2].render_as_img(image2);
-busmall_products[random3].render_as_img(image3);
+var render_image_chart = function () {
+  var canvas_el = document.getElementById('myChart'); 
+  var ctx = canvas_el.getContext('2d');
 
-product_container.addEventListener('click' , handle_bus_click);
+  var image_click_data = [];
+  var image_click_labels = [];
 
-var ctx = document.getElementById('myChart').getContext('2d');
-
-var data = [15, 10, 20];
-
-var myChart = new Chart(ctx, {
-  type: 'polarArea',
-  data: {
-    labels: ['Image 1', 'Image 2', 'Image 3'],
-    datasets: [{
-      label: 'Popular Images',
-      data: data,
-      backgroundColor: [
-        'red',
-        'white',
-        'blue',
-      ],
-      borderColor: [
-        'blue',
-        'red',
-        'white',
-      ],
-      hoverBackgroundColor: [
-        'purple',
-        'green',
-        'yellow',
-       
-      ],
-    }]
+  for (var i = 0; i < busmall_products.length; i++) {
+    image_click_data.push(busmall_products[i].clicks);
+    image_click_labels.push(busmall_products[i].name);
   }
 
-});
+  render_chart(image_click_data, image_click_labels, ctx);
+
+};
+
+var render_chart = function (image_click_data, image_click_labels, ctx) {
+  new Chart(ctx, {
+    type: 'polarArea',
+    data: {
+      labels: image_click_labels,
+      datasets: [{
+        label: '# of Votes',
+        data: image_click_data,
+        backgroundColor: [
+          'rgba(255, 99, 132, 0.2)',
+          'rgba(54, 162, 235, 0.2)',
+          'rgba(255, 206, 86, 0.2)',
+          'rgba(75, 192, 192, 0.2)',
+          'rgba(153, 102, 255, 0.2)',
+          'rgba(255, 159, 64, 0.2)'
+        ],
+        borderColor: [
+          'rgba(255,99,132,1)',
+          'rgba(54, 162, 235, 1)',
+          'rgba(255, 206, 86, 1)',
+          'rgba(75, 192, 192, 1)',
+          'rgba(153, 102, 255, 1)',
+          'rgba(255, 159, 64, 1)'
+        ],
+        borderWidth: 1
+      }]
+    },
+    options: {
+      scales: {
+        yAxes: [{
+          ticks: {
+            beginAtZero: true
+          }
+        }]
+      }
+    }
+  });
+
+};
+
+
