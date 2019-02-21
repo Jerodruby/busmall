@@ -1,11 +1,13 @@
 img {
     width: 250px;
     height: 250px;
+
 }
 
 body > div {
    width: 600px;
    height: 600px; 
+
 }
 
 #div1 {
@@ -18,4 +20,7 @@ body > div {
 
 #div3 {
     display: inline-block;
+
+
+
 }
