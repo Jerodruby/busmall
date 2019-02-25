@@ -1,3 +1,12 @@
+*{
+    background-color: rgb(169, 248, 248)
+}
+
+h1 {
+    font-size: 40px; 
+    color: rgb(238, 12, 12)
+}
+
 img {
     width: 250px;
     height: 250px;
@@ -21,3 +30,41 @@ body > div {
 #div3 {
     display: inline-block;
 }
+
+.element {
+    height: 200px;
+    width: 200px;
+    background-color: red;
+    animation: 
+      pulse 1s ease infinite alternate, 
+      nudge 2s linear infinite alternate;
+    border-radius: 100%;
+  }
+  
+  @keyframes pulse {
+    0%, 100% {
+      background-color: red;
+    }
+    50% {
+      background-color: rgb(29, 11, 192);
+    }
+  }
+  
+  @keyframes nudge {
+    0%, 100% {
+      transform: translate(0, 0);
+    }
+    
+    50% {
+      transform: translate(150px, 0);
+    }
+    
+    80% {
+      transform: translate(0px, 100);
+    }
+  }
+  
+  
+  
+
+
